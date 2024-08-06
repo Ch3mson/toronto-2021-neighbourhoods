@@ -20,15 +20,15 @@ neighbourhood_names = df.columns.tolist()
 neighbourhood_names.pop(0)
 
 # The dropdown menu
-neighbourhood = st.selectbox("choose neighbourhood", (neighbourhood_names))
+neighbourhood = st.selectbox("Choose a neighbourhood", (neighbourhood_names))
 
 # Find the column number of the neighbourhood name.
 column_number = df.columns.get_loc(neighbourhood)
 st.write("Chosen neighbourhood is in column number: " + str(column_number))
 
 # We can details from the first column (contains age, salary, etc.)
-column_0 = df["Neighbourhood Name"]  # This is a Series
-column_n = df[neighbourhood]         # Another Series, assuming neighbourhood is a valid column name
+column_0 = df["Neighbourhood Name"]
+column_n = df[neighbourhood]
 
 df_new = pd.DataFrame({
     'Key Details': column_0,
