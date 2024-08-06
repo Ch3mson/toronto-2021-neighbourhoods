@@ -1,29 +1,38 @@
 # pip install -r requirements.txt
 # python -m streamlit run your_script.py
 
-"""
-# My first app
-Here's our first attempt at using data to create a table:
-"""
-
 import numpy as np
 import streamlit as st
 import pandas as pd
 
 st.title("Toronto Neighbourhood Demographics")
-st.write("An interactive website that lets users to extract data from https://open.toronto.ca/dataset/neighbourhood-profiles/.")
-st.write("If more details are needed, email me at bensonyan778@hotmail.com for suggestions")
-st.write("note that neighbourhood 104 Lawrence Phttps://open.toronto.ca/dataset/neighbourhood-profiles/ark South is unavailable")
-st.write("hello world")
+st.markdown("""
+An interactive website that lets users extract data from [Toronto Neighbourhood Profiles Dataset](https://open.toronto.ca/dataset/neighbourhood-profiles/).
+If more details are needed, email me at [bensonyan778@hotmail.com](mailto:bensonyan778@hotmail.com) for suggestions. Note that neighbourhood 104 Lawrence Park South is unavailable from the dataset.
+""")
 
+# Loading csv file for usage. encoding must be latin-1 
 df = pd.read_csv("./neighbourhood-profiles-2021.csv", encoding='latin-1')
 df
 
-neighbourhood = st.selectbox("choose neighbourhood", ("1", "2", "3"))
+# Take all column names and place it into a list. Also remove 0'th element since it's called "Neighbourhood Name"
+neighbourhood_names = df.columns.tolist()
+neighbourhood_names.pop(0)
 
+# The dropdown menu
+neighbourhood = st.selectbox("choose neighbourhood", (neighbourhood_names))
 
-dataframe = pd.DataFrame(
-    np.random.randn(10, 20),
-    columns=('col %d' % i for i in range(20)))
+# Find the column number of the neighbourhood name.
+column_number = df.columns.get_loc(neighbourhood)
+st.write("Chosen neighbourhood is in column number: " + str(column_number))
 
-st.dataframe(dataframe.style.highlight_max(axis=0))
+# We can details from the first column (contains age, salary, etc.)
+column_0 = df["Neighbourhood Name"]  # This is a Series
+column_n = df[neighbourhood]         # Another Series, assuming neighbourhood is a valid column name
+
+df_new = pd.DataFrame({
+    'Key Details': column_0,
+    'Neighbourhood Stats': column_n
+})
+
+st.write(df_new)
