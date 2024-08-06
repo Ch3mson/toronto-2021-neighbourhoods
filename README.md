@@ -1,6 +1,7 @@
 to run:
-1. pip install -r requirements.txt
-2. python -m streamlit run app.py
+1. Install Python3.12.4 or above
+2. pip install -r requirements.txt
+3. python -m streamlit run app.py
 
 A Streamlit application that is used to interact with https://open.toronto.ca/dataset/neighbourhood-profiles/ for convenience.
 Free to use for all, but most useful for real-estate developers who want to understand their neighbourhood profile.
