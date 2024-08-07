@@ -29,16 +29,13 @@ neighbourhood = st.sidebar.selectbox(
 
 st.sidebar.markdown('''
 # Sections
+- [Selected Neighbourhood](#selected-neighbourhood)
 - [Income](#income)
 - [Family Demographics](#family-demographics)
 - [Age Distribution](#age-distribution)
 - [Labour Force](#labour-force)
 - [Languages](#languages)
 ''', unsafe_allow_html=True)
-
-# Find the column number of the neighbourhood name.
-column_number = df.columns.get_loc(neighbourhood)
-st.write("Chosen neighbourhood is in column " + str(column_number) + " with the following stats:")
 
 # We can details from the first column (co  ntains age, salary, etc.)
 column_0 = df["Neighbourhood Name"]
@@ -49,10 +46,62 @@ df_new = pd.DataFrame({
     neighbourhood: column_n
 })
 
+st.header("Selected Neighbourhood", divider=True)
+# Find the column number of the neighbourhood name.
+column_number = df.columns.get_loc(neighbourhood)
+st.write("Chosen neighbourhood is in column " + str(column_number) + " with the following stats:")
 st.dataframe(df_new, use_container_width=True)
 
+
+# Income Section:
 st.header("Income", divider=True)
+st.write("Age Distribution for Selected Neighborhood:")
+
+filtered_df = df.loc[29:32, ["Neighbourhood Name", neighbourhood]]
+filtered_data = filtered_df[neighbourhood]
+labels = filtered_df["Neighbourhood Name"]
+
+# Create a pie chart
+fig, ax = plt.subplots()
+ax.pie(filtered_data, labels=labels, autopct='%1.1f%%', startangle=90, textprops={'color': 'white'})
+ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+# Make the background transparent
+
+st.pyplot(fig)
+
+
+
+
+# income of individuals
+# income adjusted with inflation
+# Income compared to other neighbourhood rankings
+
+
+
 st.header("Family Demographics", divider=True)
+# Types of families (couple, family, etc.)
+# # people in households
+# Ethnicity
+
+
+
+
 st.header("Age Distribution", divider=True)
+# age
+
+
+
+
+
 st.header("Labour Force", divider=True)
+
+
+
+
+
 st.header("Languages", divider=True)
+
+
+
+
