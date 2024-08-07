@@ -4,6 +4,8 @@
 import numpy as np
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+
 
 st.title("Toronto Neighbourhood Demographics")
 st.markdown("""
@@ -15,6 +17,8 @@ If more details are needed, email me at [bensonyan778@hotmail.com](mailto:benson
 df = pd.read_csv("./neighbourhood-profiles-2021.csv", encoding='latin-1')
 df
 
+
+#SECTION 1
 # Take all column names and place it into a list. Also remove 0'th element since it's called "Neighbourhood Name"
 neighbourhood_names = df.columns.tolist()
 neighbourhood_names.pop(0)
@@ -31,6 +35,8 @@ st.sidebar.markdown('''
 - [Section 2](#section-2)
 ''', unsafe_allow_html=True)
 
+
+#SECTION 2
 # Find the column number of the neighbourhood name.
 column_number = df.columns.get_loc(neighbourhood)
 st.write("Chosen neighbourhood is in column " + str(column_number) + " with the following stats:")
@@ -44,5 +50,24 @@ df_new = pd.DataFrame({
     neighbourhood: column_n
 })
 
-
 st.dataframe(df_new, use_container_width=True)
+
+
+#SECTION 3
+st.write("Age Distribution for Selected Neighborhood:")
+
+# Filter the data to include rows 29 to 32 (age distribution stats)
+filtered_df = df.loc[29:32, ["Neighbourhood Name", neighbourhood]]
+filtered_data = filtered_df[neighbourhood]
+labels = filtered_df["Neighbourhood Name"]
+
+# Create a pie chart
+fig, ax = plt.subplots()
+ax.pie(filtered_data, labels=labels, autopct='%1.1f%%', startangle=90, textprops={'color': 'white'})
+ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+# Make the background transparent
+fig.patch.set_alpha(0)
+
+# Display the pie chart
+st.pyplot(fig)
