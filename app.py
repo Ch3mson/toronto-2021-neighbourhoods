@@ -1,5 +1,5 @@
 # pip install -r requirements.txt
-# python -m streamlit run your_script.py
+# python -m streamlit run app.py
 
 import numpy as np
 import streamlit as st
@@ -8,7 +8,7 @@ import pandas as pd
 st.title("Toronto Neighbourhood Demographics")
 st.markdown("""
 An interactive website that lets users extract data from [Toronto Neighbourhood Profiles Dataset](https://open.toronto.ca/dataset/neighbourhood-profiles/).
-If more details are needed, email me at [bensonyan778@hotmail.com](mailto:bensonyan778@hotmail.com) for suggestions. Note that neighbourhood 104 Lawrence Park South is unavailable from the dataset.
+If more details are needed, email me at [bensonyan778@hotmail.com](mailto:bensonyan778@hotmail.com) for suggestions. Note that neighbourhood 104 Mount Pleasant West is unavailable from the dataset.
 """)
 
 # Loading csv file for usage. encoding must be latin-1 
@@ -19,12 +19,21 @@ df
 neighbourhood_names = df.columns.tolist()
 neighbourhood_names.pop(0)
 
-# The dropdown menu
-neighbourhood = st.selectbox("Choose a neighbourhood", (neighbourhood_names))
+# selected neighbourhood with sidebar
+neighbourhood = st.sidebar.selectbox(
+    "Select a neighbourhood",
+    neighbourhood_names
+)
+
+st.sidebar.markdown('''
+# Sections
+- [Section 1](#section-1)
+- [Section 2](#section-2)
+''', unsafe_allow_html=True)
 
 # Find the column number of the neighbourhood name.
 column_number = df.columns.get_loc(neighbourhood)
-st.write("Chosen neighbourhood is in column number: " + str(column_number))
+st.write("Chosen neighbourhood is in column " + str(column_number) + " with the following stats:")
 
 # We can details from the first column (contains age, salary, etc.)
 column_0 = df["Neighbourhood Name"]
@@ -32,7 +41,8 @@ column_n = df[neighbourhood]
 
 df_new = pd.DataFrame({
     'Key Details': column_0,
-    'Neighbourhood Stats': column_n
+    neighbourhood: column_n
 })
 
-st.write(df_new)
+
+st.dataframe(df_new, use_container_width=True)
