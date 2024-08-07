@@ -27,8 +27,11 @@ neighbourhood = st.sidebar.selectbox(
 
 st.sidebar.markdown('''
 # Sections
-- [Section 1](#section-1)
-- [Section 2](#section-2)
+- [Income](#income)
+- [Family Demographics](#family-demographics)
+- [Age Distribution](#age-distribution)
+- [Labour Force](#labour-force)
+- [Languages](#languages )
 ''', unsafe_allow_html=True)
 
 # Find the column number of the neighbourhood name.
@@ -46,3 +49,9 @@ df_new = pd.DataFrame({
 
 
 st.dataframe(df_new, use_container_width=True)
+
+st.header("Income", divider=True)
+st.header("Family Demographics", divider=True)
+st.header("Age Distribution", divider=True)
+st.header("Labour Force", divider=True)
+st.header("Languages", divider=True)
