@@ -17,8 +17,6 @@ If more details are needed, email me at [bensonyan778@hotmail.com](mailto:benson
 df = pd.read_csv("./neighbourhood-profiles-2021.csv", encoding='latin-1')
 df
 
-
-#SECTION 1
 # Take all column names and place it into a list. Also remove 0'th element since it's called "Neighbourhood Name"
 neighbourhood_names = df.columns.tolist()
 neighbourhood_names.pop(0)
@@ -35,16 +33,14 @@ st.sidebar.markdown('''
 - [Family Demographics](#family-demographics)
 - [Age Distribution](#age-distribution)
 - [Labour Force](#labour-force)
-- [Languages](#languages )
+- [Languages](#languages)
 ''', unsafe_allow_html=True)
 
-
-#SECTION 2
 # Find the column number of the neighbourhood name.
 column_number = df.columns.get_loc(neighbourhood)
 st.write("Chosen neighbourhood is in column " + str(column_number) + " with the following stats:")
 
-# We can details from the first column (contains age, salary, etc.)
+# We can details from the first column (co  ntains age, salary, etc.)
 column_0 = df["Neighbourhood Name"]
 column_n = df[neighbourhood]
 
