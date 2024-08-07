@@ -54,3 +54,9 @@ df_new = pd.DataFrame({
 })
 
 st.dataframe(df_new, use_container_width=True)
+
+st.header("Income", divider=True)
+st.header("Family Demographics", divider=True)
+st.header("Age Distribution", divider=True)
+st.header("Labour Force", divider=True)
+st.header("Languages", divider=True)
