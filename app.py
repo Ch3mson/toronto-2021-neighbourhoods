@@ -41,7 +41,8 @@ st.sidebar.markdown('''
 column_0 = df["Neighbourhood Name"]
 column_n = df[neighbourhood]
 
-df_new = pd.DataFrame({
+# we now use this new dataframe for future referenece
+neighbourhood_df = pd.DataFrame({
     'Key Details': column_0,
     neighbourhood: column_n
 })
@@ -50,26 +51,33 @@ st.header("Selected Neighbourhood", divider=True)
 # Find the column number of the neighbourhood name.
 column_number = df.columns.get_loc(neighbourhood)
 st.write("Chosen neighbourhood is in column " + str(column_number) + " with the following stats:")
-st.dataframe(df_new, use_container_width=True)
+st.dataframe(neighbourhood_df, use_container_width=True)
 
 
-# Income Section:
-st.header("Income", divider=True)
+# Age Section------------------------------------------------------------
+st.header("Age", divider=True)
 st.write("Age Distribution for Selected Neighborhood:")
 
-filtered_df = df.loc[29:32, ["Neighbourhood Name", neighbourhood]]
-filtered_data = filtered_df[neighbourhood]
-labels = filtered_df["Neighbourhood Name"]
+# select rows 29-32
+age_rows = neighbourhood_df.loc[[29, 30, 31, 32]]
+# extract that column with selected neighbourhood
+neighbourhood_age_column = age_rows[neighbourhood]
+# get a list of 
+labels = column_0[29:33]
 
 # Create a pie chart
 fig, ax = plt.subplots()
-ax.pie(filtered_data, labels=labels, autopct='%1.1f%%', startangle=90, textprops={'color': 'white'})
+ax.pie(neighbourhood_age_column, labels=labels, autopct='%1.1f%%', startangle=90, textprops={'color': 'white'})
 ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+fig.patch.set_alpha(0)
 
-# Make the background transparent
+col1_age_distribution, col2_age_distribution = st.columns([1, 1])
 
-st.pyplot(fig)
+col1_age_distribution.subheader("Age Distribution Pie Chart")
+col2_age_distribution.subheader("Age Distrubtion Table")
 
+col1_age_distribution.pyplot(fig)
+col2_age_distribution.write(age_rows)
 
 
 
