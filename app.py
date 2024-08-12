@@ -54,19 +54,19 @@ st.write("Chosen neighbourhood is in column " + str(column_number) + " with the 
 st.dataframe(neighbourhood_df, use_container_width=True)
 
 
-# Age Distribution Section------------------------------------------------------------
-st.header("Age  ", divider=True)
+# Age Distribution Section ------------------------------------------------------------
+st.header("Age", divider=True)
 
 # take necessary rows containing age information
 # extract that column with selected neighbourhood
 # get a list of labels
 age_rows = neighbourhood_df.loc[[3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]]
-neighbourhood_age_column = neighbourhood_df.loc[[3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]][neighbourhood].values
-labels = column_0.loc[[3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]].tolist()
+age_numbers = neighbourhood_df.loc[[3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]][neighbourhood].values
+labels = column_0.loc[[3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]]
 
 # Create a pie chart with transparent background
 fig, ax = plt.subplots()
-ax.pie(neighbourhood_age_column, labels=labels, autopct='%1.1f%%', startangle=90, textprops={'color': 'white'})
+ax.pie(age_numbers, labels=labels, autopct='%1.1f%%', textprops={'color': 'white'})
 ax.axis('equal')
 fig.patch.set_alpha(0)
 
@@ -76,9 +76,10 @@ col1_age_distribution.subheader("Age Distribution Pie Chart")
 col2_age_distribution.subheader("Age Distrubtion Table")
 col1_age_distribution.pyplot(fig)
 col2_age_distribution.write(age_rows)
+st.write("Average age: " + neighbourhood_df[neighbourhood][33])
+st.write("Median age: " + neighbourhood_df[neighbourhood][34])
 
-
-
+# Family Demographics Section ------------------------------------------------------------
 st.header("Family Demographics", divider=True)
 # Types of families (couple, family, etc.)
 # # people in households
@@ -86,7 +87,7 @@ st.header("Family Demographics", divider=True)
 
 
 
-
+# Income Distribution Section ------------------------------------------------------------
 st.header("Income Distribution", divider=True)
 # income of individuals
 # income adjusted with inflation
@@ -96,13 +97,13 @@ st.header("Income Distribution", divider=True)
 
 
 
-
+# Labour Force Section ------------------------------------------------------------
 st.header("Labour Force", divider=True)
 
 
 
 
-
+# Languages Section ------------------------------------------------------------
 st.header("Languages", divider=True)
 
 
