@@ -61,7 +61,7 @@ st.header("Age", divider=True)
 # extract that column with selected neighbourhood
 # get a list of labels
 age_rows = neighbourhood_df.loc[[3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]]
-age_numbers = neighbourhood_df.loc[[3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]][neighbourhood].values
+age_numbers = neighbourhood_df.loc[[3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]][neighbourhood]
 labels = column_0.loc[[3, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]]
 
 # Create a pie chart with transparent background
@@ -82,7 +82,46 @@ st.write("Median age: " + neighbourhood_df[neighbourhood][34])
 # Family Demographics Section ------------------------------------------------------------
 st.header("Family Demographics", divider=True)
 # Types of families (couple, family, etc.)
-# # people in households
+family_demographic_children_rows = neighbourhood_df.loc[[233, 234, 235]]
+family_demographic_children_numbers = neighbourhood_df.loc[[233, 234, 235]][neighbourhood].tolist()
+# convert labels to list and remove initial spaces. Convert strings to int for numbers
+family_demographic_children_labels = column_0.loc[[233, 234, 235]].tolist()
+family_demographic_children_labels = [item.strip() for item in family_demographic_children_labels]
+family_demographic_children_numbers = list(map(int, family_demographic_children_numbers))
+
+fig, ax = plt.subplots()
+
+ax.bar(family_demographic_children_labels, family_demographic_children_numbers, label=family_demographic_children_labels, width=0.5)
+ax.set_ylabel('Population')
+ax.set_title("Families with Children")
+
+st.subheader("Families with Children Graph")
+col1_demographic_children, col2_demographic_children = st.columns([1.5, 1])
+col1_demographic_children.pyplot(fig)
+col2_demographic_children.write(family_demographic_children_rows)
+percent_children = family_demographic_children_numbers[1] / family_demographic_children_numbers[0] * 100
+percent_no_children = family_demographic_children_numbers[2] / family_demographic_children_numbers[0] * 100
+st.write(f"% families with children: {percent_children:.2f}%")
+st.write(f"% families with no children: {percent_no_children:.2f}%")
+
+# people in households
+people_in_households = neighbourhood_df.loc[[224, 225, 226, 227, 228, 229]]
+people_in_households_numbers = neighbourhood_df.loc[[224, 225, 226, 227, 228, 229]][neighbourhood].tolist()
+people_in_households_labels = column_0.loc[[224, 225, 226, 227, 228, 229]].tolist()
+people_in_households_labels = [item.strip() for item in people_in_households_labels]
+people_in_households_labels[0] = 'Sample Total'
+people_in_households_labels[5] = '5+ persons'
+people_in_households_numbers = list(map(int, people_in_households_numbers))
+
+fig, ax = plt.subplots()
+ax.bar(people_in_households_labels, people_in_households_numbers, label=people_in_households_labels, width=0.5)
+ax.set_ylabel('Number of Households')
+ax.set_title("Household Size Distribution")
+plt.tight_layout()
+st.subheader("Total - Private households by household size - 25% sample data")
+col1_people_in_households, col2_people_in_households = st.columns([1.5, 1])
+col1_people_in_households.pyplot(fig)
+col2_people_in_households.write(people_in_households)
 # Ethnicity
 
 
