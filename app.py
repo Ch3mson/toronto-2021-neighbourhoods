@@ -89,20 +89,14 @@ family_demographic_children_labels = column_0.loc[[233, 234, 235]].tolist()
 family_demographic_children_labels = [item.strip() for item in family_demographic_children_labels]
 family_demographic_children_numbers = list(map(int, family_demographic_children_numbers))
 
-fig, ax = plt.subplots()
+fig1, ax = plt.subplots()
 
 ax.bar(family_demographic_children_labels, family_demographic_children_numbers, label=family_demographic_children_labels, width=0.5)
 ax.set_ylabel('Population')
 ax.set_title("Families with Children")
 
-st.subheader("Families with Children Graph")
-col1_demographic_children, col2_demographic_children = st.columns([1.5, 1])
-col1_demographic_children.pyplot(fig)
-col2_demographic_children.write(family_demographic_children_rows)
 percent_children = family_demographic_children_numbers[1] / family_demographic_children_numbers[0] * 100
 percent_no_children = family_demographic_children_numbers[2] / family_demographic_children_numbers[0] * 100
-st.write(f"% families with children: {percent_children:.2f}%")
-st.write(f"% families with no children: {percent_no_children:.2f}%")
 
 # people in households
 people_in_households = neighbourhood_df.loc[[224, 225, 226, 227, 228, 229]]
@@ -113,23 +107,43 @@ people_in_households_labels[0] = 'Sample Total'
 people_in_households_labels[5] = '5+ persons'
 people_in_households_numbers = list(map(int, people_in_households_numbers))
 
-fig, ax = plt.subplots()
+fig2, ax = plt.subplots()
 ax.bar(people_in_households_labels, people_in_households_numbers, label=people_in_households_labels, width=0.5)
 ax.set_ylabel('Number of Households')
 ax.set_title("Household Size Distribution")
 plt.tight_layout()
-st.subheader("Total - Private households by household size - 25% sample data")
-col1_people_in_households, col2_people_in_households = st.columns([1.5, 1])
-col1_people_in_households.pyplot(fig)
-col2_people_in_households.write(people_in_households)
-# Ethnicity
+col1, col2 = st.columns([1, 1])
 
-
+col1.subheader("Families with Children")
+col2.subheader("Household Size")
+col1.pyplot(fig1)
+col2.pyplot(fig2)
+col1.write(family_demographic_children_rows)
+col2.write(people_in_households)
+st.write(f"% families with children: {percent_children:.2f}%")
+st.write(f"% families with no children: {percent_no_children:.2f}%")
 
 # Income Distribution Section ------------------------------------------------------------
 st.header("Income Distribution", divider=True)
-# income of individuals
-# income adjusted with inflation
+income_distribution = neighbourhood_df.loc[[92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 103, 104]]
+income_distribution_numbers = neighbourhood_df.loc[[92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 103, 104]][neighbourhood].tolist()
+income_distribution_labels = column_0.loc[[92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 103, 104]].tolist()
+income_distribution_labels[0] = 'Under $10,000'
+income_distribution_labels[11] = '$150,000+'
+income_distribution_numbers = list(map(int, income_distribution_numbers))
+
+fig, ax = plt.subplots()
+ax.bar(income_distribution_labels, income_distribution_numbers, label=income_distribution_labels, width=0.5)
+ax.set_ylabel('Income')
+ax.set_title('Income Distribution of ' + neighbourhood)
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+
+st.subheader("Total income groups in 2020 for the population aged 15 years and over in private households - 25% sample data")
+st.write(fig)
+st.dataframe(income_distribution, use_container_width=True)
+st.write("Median income: $" + neighbourhood_df[neighbourhood][140])
+st.write("Median income: $" + neighbourhood_df[neighbourhood][141])
 # Income compared to other neighbourhood rankings
 
 
